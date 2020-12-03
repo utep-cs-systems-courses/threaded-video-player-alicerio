@@ -22,7 +22,7 @@ class FrameQueue:
     def dequeue(self):
         self.fullCheck.acquire()
         self.queueLock.acquire()
-        frame = self.list.pop(0) # Deletes the first element of the list, transfer it into variable.
+        frame = self.queue.pop(0) # Deletes the first element of the list, transfer it into variable.
         self.queueLock.release()
         self.emptyCheck.release() # Unlocks the producer thread if there is space left in the queue.
         return frame
