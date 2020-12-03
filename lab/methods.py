@@ -32,7 +32,7 @@ def extractFrames(filename, frameQueue):
 
 def convertGrayscale(colorFrames, grayFrames):
     print("Converting to grayscale...")
-    i = 0 
+    i = 0
     colorFrame = colorFrames.dequeue()
 
     while colorFrame is not DELIMITER:
@@ -56,13 +56,14 @@ def displayFrames(frames):
         print(f'Displaying frame # {i}')
         cv2.imshow('Video Play', frame)
 
-        if 0xFF == ord("q") and cv2.waitKey(FRAMEDELAY): # Wait 42 ms
+        if cv2.waitKey(FRAMEDELAY) and 0xFF == ord("q"):
             break
+
         i += 1
         frame = frames.dequeue()
 
-    cv2.destroyAllWindows() # Cleaning opened windows
     print('Process completed')
+    cv2.destroyAllWindows() # Cleaning opened windows
 
 
 if __name__ == "__main__":
