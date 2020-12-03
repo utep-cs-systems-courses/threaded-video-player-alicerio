@@ -12,22 +12,22 @@ VIDEO = "../clip.mp4" # video
 DELIMITER = "\0"
 FRAMEDELAY = 42
 
-# based on extractFrames.py demo
+
 def extractFrames(filename, frameQueue):
     print('Extracting frames from: ', filename)
     i = 0 
     video = cv2.VideoCapture(filename)
     success, image = video.read() # Reading each frame 1 by 1
 
-    print(f'Reading frame {i} {success}')
+    print('Frame # {i} {success}')
     while success:
         frameQueue.enqueue(image)
 
         success, image = video.read()
         i += 1
-        print(f'Reading frame {i} {success}')
+        print(f'Frame # {i} {success}')
 
-    print('All frames have been extracted')
+    print('Frame extraction completed')
     frameQueue.enqueue(DELIMITER)
 
 
@@ -38,7 +38,7 @@ def convertGrayscale(colorFrames, grayFrames):
     colorFrame = colorFrames.dequeue()
 
     while colorFrame is not DELIMITER:
-        print(f'Converting frame {i}')
+        print(f'Converting frame # {i}')
 
         grayFrame = cv2.cvtColor(colorFrame, cv2.COLOR_BGR2GRAY) # convert the image to grayscale
         grayFrames.enqueue(grayFrame) # enqueue frame 
@@ -55,13 +55,10 @@ def displayFrames(frames):
     frame = frames.dequeue()
 
     while frame is not DELIMITER:
-        print(f'Displaying frame {i}')
-
-        # display the image in a window call "video"
+        print(f'Displaying frame # {i}')
         cv2.imshow('Video Play', frame)
 
-        # wait 42ms (what was used in the demos) and check if the user wants to quit with (q)
-        if 0xFF == ord("q") and cv2.waitKey(FRAMEDELAY):
+        if 0xFF == ord("q") and cv2.waitKey(FRAMEDELAY): # Wait 42 ms
             break
         i += 1
         frame = frames.dequeue()
