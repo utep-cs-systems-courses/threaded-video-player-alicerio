@@ -22,7 +22,6 @@ def extractFrames(filename, frameQueue):
     print('Frame # {i} {success}')
     while success:
         frameQueue.enqueue(image)
-
         success, image = video.read()
         i += 1
         print(f'Frame # {i} {success}')
@@ -33,8 +32,7 @@ def extractFrames(filename, frameQueue):
 
 def convertGrayscale(colorFrames, grayFrames):
     print("Converting to grayscale...")
-    i = 0 # initialize frame count
-
+    i = 0 
     colorFrame = colorFrames.dequeue()
 
     while colorFrame is not DELIMITER:
@@ -43,7 +41,7 @@ def convertGrayscale(colorFrames, grayFrames):
         grayFrame = cv2.cvtColor(colorFrame, cv2.COLOR_BGR2GRAY) # convert the image to grayscale
         grayFrames.enqueue(grayFrame) # enqueue frame 
         i += 1
-        colorFrame = colorFrames.obtain() # dequeue next frame
+        colorFrame = colorFrames.dequeue() # dequeue next frame
 
     print('Process completed')
     grayFrames.enqueue(DELIMITER)
