@@ -9,8 +9,8 @@ class FrameQueue:
     def __init__(self):
         self.queue = []
         self.queueLock = threading.Lock()
-        self.emptyCheck = Semaphore(0)
-        self.fullCheck = Semaphore(24)
+        self.emptyCheck = threading.Semaphore(0)
+        self.fullCheck = threading.Semaphore(24)
 
     def enqueue(self, frame):
         self.emptyCheck.acquire() 

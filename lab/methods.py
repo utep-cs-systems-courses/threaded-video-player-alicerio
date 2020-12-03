@@ -5,6 +5,7 @@
 # Assignment: Lab 3 - Threaded Video Player
 
 import cv2
+from FrameQueue import FrameQueue
 
 VIDEO = "..\clip.mp4" 
 DELAY = 42
