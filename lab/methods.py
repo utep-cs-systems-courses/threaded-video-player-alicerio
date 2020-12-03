@@ -5,7 +5,6 @@
 # Assignment: Lab 3 - Threaded Video Player
 
 import cv2
-import threading
 from FrameQueue import FrameQueue 
 
 VIDEO = "../clip.mp4" # video
@@ -64,18 +63,3 @@ def displayFrames(frames):
 
     print('Process completed')
     cv2.destroyAllWindows() # Cleaning opened windows
-
-
-if __name__ == "__main__":
-
-    colorFrames = FrameQueue()
-    grayFrames = FrameQueue()
-
-    extractThread = threading.Thread(target = extractFrames, args = (VIDEO, colorFrames))
-    convertThread = threading.Thread(target = convertGrayscale, args = (colorFrames, grayFrames))
-    displayThread = threading.Thread(target = displayFrames, args = (grayFrames,)) #
-
-    # Start Threads
-    extractThread.start()
-    convertThread.start()
-    displayThread.start()
