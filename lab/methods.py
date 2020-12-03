@@ -11,14 +11,14 @@ VIDEO = "../clip.mp4" # video
 DELIMITER = "\0"
 FRAMEDELAY = 42
 
-
 def extractFrames(filename, frameQueue):
     print('Extracting frames from: ', filename)
     i = 0 
     video = cv2.VideoCapture(filename)
     success, image = video.read() # Reading each frame 1 by 1
 
-    print('Frame # {i} {success}')
+    print('Extracted Frame # {i} {success}')
+    
     while success:
         frameQueue.enqueue(image)
         success, image = video.read()
