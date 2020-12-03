@@ -8,7 +8,6 @@ import cv2
 from FrameQueue import FrameQueue 
 
 VIDEO = "../clip.mp4" # video
-DELIMITER = "\0"
 FRAMEDELAY = 42
 
 def extractFrames(filename, frameQueue):
@@ -17,16 +16,16 @@ def extractFrames(filename, frameQueue):
     video = cv2.VideoCapture(filename)
     success, image = video.read() # Reading each frame 1 by 1
 
-    print('Extracted Frame # {i} {success}')
+    print('Extracted Frame # {i}')
     
     while success:
         frameQueue.enqueue(image)
         success, image = video.read()
         i += 1
-        print(f'Frame # {i} {success}')
+        print(f'Frame # {i} enqueued')
 
     print('Frame extraction completed')
-    frameQueue.enqueue(DELIMITER)
+    frameQueue.enqueue(None)
 
 
 def convertGrayscale(colorFrames, grayFrames):
@@ -34,7 +33,7 @@ def convertGrayscale(colorFrames, grayFrames):
     i = 0
     colorFrame = colorFrames.dequeue()
 
-    while colorFrame is not DELIMITER:
+    while colorFrame is not None:
         print(f'Converting frame # {i}')
 
         grayFrame = cv2.cvtColor(colorFrame, cv2.COLOR_BGR2GRAY) # convert the image to grayscale
@@ -42,8 +41,8 @@ def convertGrayscale(colorFrames, grayFrames):
         i += 1
         colorFrame = colorFrames.dequeue() # dequeue next frame
 
-    print('Process completed')
-    grayFrames.enqueue(DELIMITER)
+    print('Frame conversion completed')
+    grayFrames.enqueue(None)
 
 def displayFrames(frames):
     print('Displaying frames...')
@@ -51,7 +50,7 @@ def displayFrames(frames):
 
     frame = frames.dequeue()
 
-    while frame is not DELIMITER:
+    while frame is not None:
         print(f'Displaying frame # {i}')
         cv2.imshow('Video Play', frame)
 
@@ -61,5 +60,5 @@ def displayFrames(frames):
         i += 1
         frame = frames.dequeue()
 
-    print('Process completed')
+    print('Frame displaying completed.')
     cv2.destroyAllWindows() # Cleaning opened windows
