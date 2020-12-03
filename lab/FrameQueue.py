@@ -2,10 +2,9 @@
 # Course: Theory of Operating Systems
 # Assignment: Lab 3 - Threaded Video Player
 
-from threading import Semaphore
 import threading
 
-class FrameQueue:
+class FrameQueue():
     def __init__(self):
         self.queue = []
         self.lock = threading.Lock()
